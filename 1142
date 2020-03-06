@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 15
+#define M 15
+
+void massiv_1(int A[N][M])
+{
+	srand(time(0));
+	for (int i = 0; i < N; ++i)
+		for (int j = 0; j < M; ++j)
+			if (i == 0 || j == 0 || i % (N - 1) == 0 || j % (M - 1) == 0)
+				A[i][j] = 1;
+			else
+				A[i][j] = rand() % 2 ? rand() % 2 : 0;
+}
+void massiv_2(int A[N][M])
+{
+	for (int i = 0; i < N; ++i)
+	{
+		for (int j = 0; j < M; ++j)
+			printf("%d", A[i][j]);
+		printf("\n");
+	}
+}
+void massiv_3(int A[N][M], int x, int i, int j)
+{
+	if (i < N && j < M)
+	{
+		if (A[i][j] == 0)
+		{
+			A[i][j] = x;
+			massiv_3(A, x, i, j + 1);
+			massiv_3(A, x, i, j - 1);
+			massiv_3(A, x, i - 1, j);
+			massiv_3(A, x, i + 1, j);
+		}
+		else if (A[i][j] == 1)
+		{
+			return;
+		}
+	}
+}
+int main()
+{
+	int A[N][M];
+	int x;
+	int i;
+	int j;
+	printf("Massiv_1\n");
+	massiv_1(A);
+	massiv_2(A);
+	printf("Chislo zalivki-");
+	scanf("%d", &x);
+	printf("Pervay coordinata mssiva-");
+	scanf("%d", &i);
+	printf("Vtoray coordinata mssiva-");
+	scanf("%d", &j);
+	printf("Massiv_2\n");
+	massiv_3(A, x, i, j);
+	massiv_2(A);
+	getchar();
+}
